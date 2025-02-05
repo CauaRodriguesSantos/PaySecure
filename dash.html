@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaySecure</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+        }
+
+        .menu-title {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .menu-item.active {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-title {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stat-change.positive {
+            color: #28a745;
+        }
+
+        .stat-change.negative {
+            color: #dc3545;
+        }
+
+        .chart-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .date-range {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        #perfil {
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        #botao {
+            width: 20px;
+            height: 20px;
+            border-radius: 10%;
+            margin-left: 10px;
+        }
+
+        #notificacao {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-notification {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-notification img {
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">S</div>
+                PaySecure
+            </div>
+            <div class="menu-section">
+                <div class="menu-title">MENU</div>
+                <a href="#" class="menu-item active">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#" class="menu-item">
+                    <span>📥</span> Notificações
+                </a>
+                <a href="#" class="menu-item">
+                    <span>👥</span> Clientes
+                </a>
+                <a href="#" class="menu-item">
+                    <span>🎫</span> Produtos
+                </a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-title">Configurações</div>
+                <a href="#" class="menu-item">
+                    <span>📈</span> Insights
+                </a>
+                <a href="#" class="menu-item">
+                    <span>📬</span> Suporte
+                </a>
+                <a href="#" class="menu-item">
+                    <span>📁</span> Pedidos
+                </a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div style="display: flex; gap: 10px;">
+                    <select class="date-range">
+                        <option>DIA</option>
+                        <option>SEMANA</option>
+                        <option>MÊS</option>
+                    </select>
+                    <button class="btn btn-primary">Baixar CSV</button>
+                    <div class="profile-notification">
+                        <img id="notificacao" src="https://via.placeholder.com/25" alt="Notificações">
+                        <img id="perfil" src="https://via.placeholder.com/40" alt="Perfil">
+                    </div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Lucro Total</div>
+                    <div class="stat-value">R$ 14.021,21</div>
+                    <div class="stat-change positive">+10% ↑</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total de Vendas Realizadas</div>
+                    <div class="stat-value">877</div>
+                    <div class="stat-change negative">-15% ↓</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Valor de Ticket</div>
+                    <div class="stat-value">R$ 37,47</div>
+                    <div class="stat-change positive">+17% ↑</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Saldo Disponível para Saque</div>
+                    <div class="stat-value">R$ 0,00</div>
+                    <div class="stat-change positive">Sacar agora</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="ticketsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="salesDistributionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan', '10 Jan', '11 Jan', '12 Jan', '13 Jan', '14 Jan', '15 Jan', '16 Jan', '17 Jan', '18 Jan', '19 Jan', '20 Jan', '21 Jan', '22 Jan', '23 Jan', '24 Jan', '25 Jan', '26 Jan', '27 Jan', '28 Jan', '29 Jan', '30 Jan', "31 Jan"],
+                datasets: [{
+                    label: 'Total de vendas',
+                    data: [9, 11, 12, 17, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#ddd'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        const ticketsCtx = document.getElementById('ticketsChart').getContext('2d');
+        new Chart(ticketsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Interesse',
+                    data: [65, 75, 60, 45, 50, 60, 70, 80, 65, 55, 50, 45],
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Compras',
+                    data: [55, 65, 50, 35, 40, 50, 60, 70, 55, 45, 40, 35],
+                    backgroundColor: 'rgba(0, 123, 255, 0.8)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#ddd'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        const salesDistributionCtx = document.getElementById('salesDistributionChart').getContext('2d');
+        new Chart(salesDistributionCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Pack 1', 'Pack 2', 'Pack 3'],
+                datasets: [{
+                    label: 'Distribuição de Vendas',
+                    data: [300, 150, 100],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

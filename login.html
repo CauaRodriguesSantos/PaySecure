@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PaySecure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://wallpaperaccess.com/full/317501.jpg') no-repeat center center/cover;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 360px;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+        .links {
+            margin-top: 15px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+    <script>
+        function validarLogin() {
+            const emailCorreto = "leosilloti@gmail.com";
+            const senhaCorreta = "123ben10123";
+            
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (email === emailCorreto && senha === senhaCorreta) {
+                errorMessage.style.display = "none";
+                window.location.href = "./dash.html";
+            } else {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = "E-mail ou senha incorretos.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>PaySecure</h2>
+        <input type="email" id="email" class="input-field" placeholder="E-mail" required>
+        <input type="password" id="senha" class="input-field" placeholder="Senha" required>
+        <button class="btn-login" onclick="validarLogin()">Entrar</button>
+        <div id="error-message" class="error-message"></div>
+        <div class="links">
+            <a href="passwordoff.html">Esqueceu a senha?</a> | <a href="nao-disponivel.html">Criar conta</a>
+        </div>
+    </div>
+</body>
+</html>
