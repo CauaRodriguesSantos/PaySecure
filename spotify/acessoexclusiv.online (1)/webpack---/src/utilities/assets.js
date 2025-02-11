@@ -1,1 +1,0 @@
-No Content: webpack:///src/utilities/assets.js
