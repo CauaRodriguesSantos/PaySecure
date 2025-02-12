@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truque do Jejum - Descubra Seu Protocolo Ideal</title>
+  <!-- Importando Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset e base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    /* Header fixo */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .logo {
+      max-width: 180px;
+    }
+    .cta-header {
+      background: linear-gradient(45deg, #FF512F, #DD2476);
+      /* Vermelho/laranja vibrante */
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 5px;
+      font-weight: 600;
+      margin: auto;
+      transition: background 0.3s ease;
+    }
+    .cta-header:hover {
+      background: linear-gradient(45deg, #E8411E, #C61A5D);
+    }
+    /* Hero com efeito parallax */
+    .hero {
+      position: relative;
+      background: url('https://via.placeholder.com/1600x600?text=Imagem+Hero') no-repeat center center/cover;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      margin-top: 70px; /* Espaço para o header fixo */
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(221, 36, 118, 0.6); /* Rosa vibrante */
+      z-index: 1;
+    }
+    .hero .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    /* Seção do Quiz */
+    .quiz-container {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      margin: 40px auto;
+      padding: 40px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      margin-bottom: 40px;
+    }
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #FF512F, #DD2476);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+    .pergunta {
+      display: none;
+      text-align: center;
+    }
+    .pergunta.ativa {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    .pergunta h3 {
+      font-size: 1.5rem;
+      color: #FF512F;
+      margin-bottom: 30px;
+    }
+    .opcoes {
+      display: grid;
+      gap: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .opcao {
+      background: #f8f9fa;
+      border: 2px solid #FF512F;
+      padding: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .opcao:hover {
+      background: linear-gradient(45deg, #FF512F, #DD2476);
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(255,81,47,0.4);
+    }
+    .resultado {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .resultado h2 {
+      color: #DD2476;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    .btn-metodo {
+      background: linear-gradient(45deg, #FF512F, #DD2476);
+      color: #fff;
+      padding: 20px 50px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: inline-block;
+      margin: 30px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255,81,47,0.3);
+      animation: pulse 2s infinite;
+    }
+    .btn-metodo:hover {
+      box-shadow: 0 8px 20px rgba(255,81,47,0.5);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    /* Seção de Depoimentos */
+    .testimonials {
+      background: #fff;
+      padding: 60px 20px;
+    }
+    .testimonials h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #DD2476;
+      margin-bottom: 40px;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimonial {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .testimonial p {
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+    .testimonial span {
+      display: block;
+      font-weight: 600;
+      color: #FF512F;
+    }
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .quiz-container {
+        padding: 20px;
+        margin: 20px auto;
+      }
+      .pergunta h3 {
+        font-size: 1.3rem;
+      }
+      .btn-metodo {
+        padding: 15px 40px;
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero {
+        height: 400px;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .cta-header {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <a href="#quiz" class="cta-header">QUERO MEU ACESSO</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Descubra o Protocolo Ideal de Jejum</h1>
+      <p>Responda o quiz e receba seu plano personalizado em 1 minuto</p>
+    </div>
+  </section>
+
+  <!-- Quiz -->
+  <section class="container" id="quiz">
+    <div class="quiz-container">
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <!-- Pergunta 1 -->
+      <div class="pergunta ativa" data-indice="1">
+        <h3>Quantos quilos você quer perder?</h3>
+        <div class="opcoes">
+          <div class="opcao">Até 5kg</div>
+          <div class="opcao">Entre 5kg e 10kg</div>
+          <div class="opcao">Mais de 10kg</div>
+          <div class="opcao">Não tenho certeza</div>
+        </div>
+      </div>
+      <!-- Pergunta 2 -->
+      <div class="pergunta" data-indice="2">
+        <h3>Qual sua idade?</h3>
+        <div class="opcoes">
+          <div class="opcao">Menos de 30 anos</div>
+          <div class="opcao">Entre 30 e 45 anos</div>
+          <div class="opcao">Mais de 45 anos</div>
+          <div class="opcao">Prefiro não informar</div>
+        </div>
+      </div>
+      <!-- Pergunta 3 -->
+      <div class="pergunta" data-indice="3">
+        <h3>Como é sua rotina de exercícios?</h3>
+        <div class="opcoes">
+          <div class="opcao">Sedentário</div>
+          <div class="opcao">1-3 vezes por semana</div>
+          <div class="opcao">4+ vezes por semana</div>
+          <div class="opcao">Exercício diário</div>
+        </div>
+      </div>
+      <!-- Pergunta 4 -->
+      <div class="pergunta" data-indice="4">
+        <h3>Qual principal dificuldade?</h3>
+        <div class="opcoes">
+          <div class="opcao">Controle da fome</div>
+          <div class="opcao">Disciplina</div>
+          <div class="opcao">Resultados rápidos</div>
+          <div class="opcao">Falta de motivação</div>
+        </div>
+      </div>
+      <!-- Pergunta 5 -->
+      <div class="pergunta" data-indice="5">
+        <h3>Qual seu sexo biológico?</h3>
+        <div class="opcoes">
+          <div class="opcao">Masculino</div>
+          <div class="opcao">Feminino</div>
+          <div class="opcao">Outro</div>
+          <div class="opcao">Prefiro não informar</div>
+        </div>
+      </div>
+      <!-- Resultado -->
+      <div class="resultado">
+        <h2>Parabéns! Seu Protocolo Está Pronto 🎉</h2>
+        <p>Baseado nas suas respostas, recomendamos:</p>
+        <a href="https://go.perfectpay.com.br/PPU38CPC9T0" class="btn-metodo" target="_blank">
+          ACESSAR PROTOCOLO 24 DIAS AGORA
+        </a>
+        <p style="color: #666; margin-top: 20px;">
+          <small>Clique no botão para garantir seu acesso imediato</small>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Depoimentos -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>O que nossos clientes dizem</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p>"Depois de seguir o protocolo, minha disposição e saúde melhoraram incrivelmente. Recomendo para todos!"</p>
+          <span>— Mariana S.</span>
+        </div>
+        <div class="testimonial">
+          <p>"O quiz foi simples e eficaz, me ajudou a escolher o melhor plano para minhas necessidades."</p>
+          <span>— Carlos M.</span>
+        </div>
+        <div class="testimonial">
+          <p>"Finalmente um método que funciona de verdade! Me sinto mais leve e energizado."</p>
+          <span>— Ana P.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Truque do Jejum. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript do Quiz -->
+  <script>
+    const quiz = {
+      totalPerguntas: 5,
+      perguntaAtual: 1,
+      progresso: document.getElementById('progress'),
+      elementos: {
+        perguntas: document.querySelectorAll('.pergunta'),
+        resultado: document.querySelector('.resultado')
+      },
+      init() {
+        document.querySelectorAll('.opcao').forEach(opcao => {
+          opcao.addEventListener('click', () => this.proximaPergunta());
+        });
+        this.atualizarProgresso();
+      },
+      proximaPergunta() {
+        const currentQuestion = document.querySelector(`.pergunta[data-indice="${this.perguntaAtual}"]`);
+        if (currentQuestion) {
+          currentQuestion.classList.remove('ativa');
+        }
+        this.perguntaAtual++;
+        if (this.perguntaAtual <= this.totalPerguntas) {
+          const nextQuestion = document.querySelector(`.pergunta[data-indice="${this.perguntaAtual}"]`);
+          if (nextQuestion) {
+            nextQuestion.classList.add('ativa');
+          }
+          this.atualizarProgresso();
+        } else {
+          this.mostrarResultado();
+        }
+      },
+      atualizarProgresso() {
+        const porcentagem = (this.perguntaAtual / this.totalPerguntas) * 100;
+        this.progresso.style.width = `${porcentagem}%`;
+      },
+      mostrarResultado() {
+        document.querySelector('.quiz-container').style.padding = '60px 40px';
+        this.elementos.perguntas.forEach(p => p.style.display = 'none');
+        this.elementos.resultado.style.display = 'block';
+      }
+    };
+    document.addEventListener('DOMContentLoaded', () => quiz.init());
+  </script>
+</body>
+</html>
